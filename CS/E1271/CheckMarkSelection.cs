@@ -27,6 +27,8 @@ using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraGrid.Views.Grid;
 using DevExpress.XtraGrid.Views.Grid.ViewInfo;
 using DevExpress.Utils.Drawing;
+using DevExpress.XtraEditors.ViewInfo;
+using DevExpress.XtraEditors.Drawing;
 
 namespace DevExpress.XtraGrid.Selection {
 
@@ -37,7 +39,7 @@ namespace DevExpress.XtraGrid.Selection {
         RepositoryItemCheckEdit edit;
         const int CheckboxIndent = 4;
 
-        public GridCheckMarksSelection()           {
+        public GridCheckMarksSelection() {
             selection = new ArrayList();
         }
 
@@ -47,7 +49,7 @@ namespace DevExpress.XtraGrid.Selection {
         public GridView View {
             get { return _view; }
             set {
-                if (_view != value) {
+                if(_view != value) {
                     Detach();
                     Attach(value);
                 }
@@ -73,15 +75,15 @@ namespace DevExpress.XtraGrid.Selection {
             //	selection.AddRange(((ICollection)_view.DataSource));
             //else
             // slow:
-            for (int i = 0; i < _view.DataRowCount; i++)
+            for(int i = 0; i < _view.DataRowCount; i++)
                 selection.Add(_view.GetRow(i));
             Invalidate();
         }
         public void SelectGroup(int rowHandle, bool select) {
-            if (IsGroupRowSelected(rowHandle) && select) return;
-            for (int i = 0; i < _view.GetChildRowCount(rowHandle); i++) {
+            if(IsGroupRowSelected(rowHandle) && select) return;
+            for(int i = 0; i < _view.GetChildRowCount(rowHandle); i++) {
                 int childRowHandle = _view.GetChildRowHandle(rowHandle, i);
-                if (_view.IsGroupRow(childRowHandle))
+                if(_view.IsGroupRow(childRowHandle))
                     SelectGroup(childRowHandle, select);
                 else
                     SelectRow(childRowHandle, select, false);
@@ -92,25 +94,26 @@ namespace DevExpress.XtraGrid.Selection {
             SelectRow(rowHandle, select, true);
         }
         public void InvertRowSelection(int rowHandle) {
-            if (View.IsDataRow(rowHandle)) {
+            if(View.IsDataRow(rowHandle)) {
                 SelectRow(rowHandle, !IsRowSelected(rowHandle));
             }
-            if (View.IsGroupRow(rowHandle)) {
+            if(View.IsGroupRow(rowHandle)) {
                 SelectGroup(rowHandle, !IsGroupRowSelected(rowHandle));
             }
         }
         public bool IsGroupRowSelected(int rowHandle) {
-            for (int i = 0; i < _view.GetChildRowCount(rowHandle); i++) {
+            for(int i = 0; i < _view.GetChildRowCount(rowHandle); i++) {
                 int row = _view.GetChildRowHandle(rowHandle, i);
-                if (_view.IsGroupRow(row)) {
-                    if (!IsGroupRowSelected(row)) return false;
-                } else
-                    if (!IsRowSelected(row)) return false;
+                if(_view.IsGroupRow(row)) {
+                    if(!IsGroupRowSelected(row)) return false;
+                }
+                else
+                    if(!IsRowSelected(row)) return false;
             }
             return true;
         }
         public bool IsRowSelected(int rowHandle) {
-            if (_view.IsGroupRow(rowHandle))
+            if(_view.IsGroupRow(rowHandle))
                 return IsGroupRowSelected(rowHandle);
 
             object row = _view.GetRow(rowHandle);
@@ -118,7 +121,7 @@ namespace DevExpress.XtraGrid.Selection {
         }
 
         protected virtual void Attach(GridView view) {
-            if (view == null) return;
+            if(view == null) return;
             selection.Clear();
             this._view = view;
             view.BeginUpdate();
@@ -144,15 +147,16 @@ namespace DevExpress.XtraGrid.Selection {
                 view.CustomUnboundColumnData += new CustomColumnDataEventHandler(view_CustomUnboundColumnData);
                 view.KeyDown += new KeyEventHandler(view_KeyDown);
                 view.RowStyle += new RowStyleEventHandler(view_RowStyle);
-            } finally {
+            }
+            finally {
                 view.EndUpdate();
             }
         }
         protected virtual void Detach() {
-            if (_view == null) return;
-            if (column != null)
+            if(_view == null) return;
+            if(column != null)
                 column.Dispose();
-            if (edit != null) {
+            if(edit != null) {
                 _view.GridControl.RepositoryItems.Remove(edit);
                 edit.Dispose();
             }
@@ -167,28 +171,28 @@ namespace DevExpress.XtraGrid.Selection {
             _view = null;
         }
         protected int GetCheckBoxWidth() {
-            DevExpress.XtraEditors.ViewInfo.CheckEditViewInfo info = edit.CreateViewInfo() as DevExpress.XtraEditors.ViewInfo.CheckEditViewInfo;
+            CheckEditViewInfo info = edit.CreateViewInfo() as CheckEditViewInfo;
             int width = 0;
             GraphicsInfo.Default.AddGraphics(null);
             try {
                 width = info.CalcBestFit(GraphicsInfo.Default.Graphics).Width;
-            } finally {
+            }
+            finally {
                 GraphicsInfo.Default.ReleaseGraphics();
             }
             return width + CheckboxIndent * 2;
         }
-        protected void DrawCheckBox(Graphics g, Rectangle r, bool Checked) {
-            DevExpress.XtraEditors.ViewInfo.CheckEditViewInfo info;
-            DevExpress.XtraEditors.Drawing.CheckEditPainter painter;
-            DevExpress.XtraEditors.Drawing.ControlGraphicsInfoArgs args;
-            info = edit.CreateViewInfo() as DevExpress.XtraEditors.ViewInfo.CheckEditViewInfo;
-            painter = edit.CreatePainter() as DevExpress.XtraEditors.Drawing.CheckEditPainter;
+        protected void DrawCheckBox(GraphicsCache cache, Rectangle r, bool Checked) {
+            CheckEditViewInfo info;
+            CheckEditPainter painter;
+            ControlGraphicsInfoArgs args;
+            info = edit.CreateViewInfo() as CheckEditViewInfo;
+            painter = edit.CreatePainter() as CheckEditPainter;
             info.EditValue = Checked;
             info.Bounds = r;
-            info.CalcViewInfo(g);
-            args = new DevExpress.XtraEditors.Drawing.ControlGraphicsInfoArgs(info, new DevExpress.Utils.Drawing.GraphicsCache(g), r);
+            info.CalcViewInfo(null);
+            args = new ControlGraphicsInfoArgs(info, cache, r);
             painter.Draw(args);
-            args.Cache.Dispose();
         }
         void Invalidate() {
             _view.CloseEditor();
@@ -196,70 +200,68 @@ namespace DevExpress.XtraGrid.Selection {
             _view.EndUpdate();
         }
         void SelectRow(int rowHandle, bool select, bool invalidate) {
-            if (IsRowSelected(rowHandle) == select) return;
+            if(IsRowSelected(rowHandle) == select) return;
             object row = _view.GetRow(rowHandle);
-            if (select)
+            if(select)
                 selection.Add(row);
             else
                 selection.Remove(row);
-            if (invalidate) {
-               Invalidate();
+            if(invalidate) {
+                Invalidate();
             }
         }
         void view_CustomUnboundColumnData(object sender, CustomColumnDataEventArgs e) {
-            if (e.Column == CheckMarkColumn) {
-                if (e.IsGetData)
+            if(e.Column == CheckMarkColumn) {
+                if(e.IsGetData)
                     e.Value = IsRowSelected(View.GetRowHandle(e.ListSourceRowIndex));
                 else
                     SelectRow(View.GetRowHandle(e.ListSourceRowIndex), (bool)e.Value);
             }
         }
         void view_KeyDown(object sender, KeyEventArgs e) {
-            if (View.FocusedColumn != column || e.KeyCode != Keys.Space) return;
+            if(View.FocusedColumn != column || e.KeyCode != Keys.Space) return;
             InvertRowSelection(View.FocusedRowHandle);
         }
         void View_Click(object sender, EventArgs e) {
             GridHitInfo info;
             Point pt = _view.GridControl.PointToClient(Control.MousePosition);
             info = _view.CalcHitInfo(pt);
-            if (info.Column == column) {
-                if (info.InColumn) {
-                    if (SelectedCount == _view.DataRowCount)
+            if(info.Column == column) {
+                if(info.InColumn) {
+                    if(SelectedCount == _view.DataRowCount)
                         ClearSelection();
                     else
                         SelectAll();
                 }
-                if (info.InRowCell) {
+                if(info.InRowCell) {
                     InvertRowSelection(info.RowHandle);
                 }
             }
-            if (info.InRow && _view.IsGroupRow(info.RowHandle) && info.HitTest != GridHitTest.RowGroupButton) {
+            if(info.InRow && _view.IsGroupRow(info.RowHandle) && info.HitTest != GridHitTest.RowGroupButton) {
                 InvertRowSelection(info.RowHandle);
             }
         }
         void View_CustomDrawColumnHeader(object sender, ColumnHeaderCustomDrawEventArgs e) {
-            if (e.Column == column) {
+            if(e.Column == column) {
                 e.Info.InnerElements.Clear();
                 e.Painter.DrawObject(e.Info);
-                DrawCheckBox(e.Graphics, e.Bounds, SelectedCount == _view.DataRowCount);
+                DrawCheckBox(e.Cache, e.Bounds, SelectedCount == _view.DataRowCount);
                 e.Handled = true;
             }
         }
         void View_CustomDrawGroupRow(object sender, RowObjectCustomDrawEventArgs e) {
-            DevExpress.XtraGrid.Views.Grid.ViewInfo.GridGroupRowInfo info;
-            info = e.Info as DevExpress.XtraGrid.Views.Grid.ViewInfo.GridGroupRowInfo;
-
+            GridGroupRowInfo info = e.Info as GridGroupRowInfo;
             info.GroupText = "         " + info.GroupText.TrimStart();
-            e.Info.Paint.FillRectangle(e.Graphics, e.Appearance.GetBackBrush(e.Cache), e.Bounds);
+            e.Appearance.FillRectangle(e.Cache, e.Bounds);
             e.Painter.DrawObject(e.Info);
 
             Rectangle r = info.ButtonBounds;
             r.Offset(r.Width + CheckboxIndent * 2 - 1, 0);
-            DrawCheckBox(e.Graphics, r, IsGroupRowSelected(e.RowHandle));
+            DrawCheckBox(e.Cache, r, IsGroupRowSelected(e.RowHandle));
             e.Handled = true;
         }
         void view_RowStyle(object sender, RowStyleEventArgs e) {
-            if (IsRowSelected(e.RowHandle)) {
+            if(IsRowSelected(e.RowHandle)) {
                 e.Appearance.BackColor = SystemColors.Highlight;
                 e.Appearance.ForeColor = SystemColors.HighlightText;
             }

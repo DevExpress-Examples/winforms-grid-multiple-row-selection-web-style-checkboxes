@@ -28,14 +28,13 @@ namespace E1271 {
     public partial class Form1 : Form {
         public Form1() {
             InitializeComponent();
+            gridControl1.DataSource = DataHelper.GetData(100);
             new GridCheckMarksSelection(gridView1);
         }
 
         private void Form1_Load(object sender, EventArgs e) {
-            // TODO: This line of code loads data into the 'nwindDataSet.Orders' table. You can move, or remove it, as needed.
-            this.ordersTableAdapter.Fill(this.nwindDataSet.Orders);
-            this.colShipCountry.GroupIndex = 0;
-            this.gridView1.ExpandAllGroups();
+            gridView1.Columns["ParentID"].Group();
+            gridView1.ExpandAllGroups();
         }
     }
 }
