@@ -8,3 +8,8 @@ Starting with version **18.1**, in multiple row selection mode, you can sync row
 
 ## ***If the built-in CheckBox column does not suit you, we will be happy to find the most appropriate solution for you if you describe your real-life scenario. Just click   [here](https://www.devexpress.com/Support/Center/Question/Create) to submit a ticket to our Support Center.***
 
+
+<b>See also:</b>
+
+[DevExpress WinForms Troubleshooting - Grid Control](https://go.devexpress.com/CheatSheets_WinForms_Examples_T934742.aspx)
+
