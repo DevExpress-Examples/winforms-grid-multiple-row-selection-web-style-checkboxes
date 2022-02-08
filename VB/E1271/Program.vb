@@ -1,4 +1,4 @@
-﻿' Developer Express Code Central Example:
+' Developer Express Code Central Example:
 ' Multiple selection using checkbox (web style)
 ' 
 ' The following example shows how to implement multiple selection in the web style
@@ -14,25 +14,21 @@
 ' 
 ' You can find sample updates and versions for different programming languages here:
 ' http://www.devexpress.com/example=E1271
-
 Imports System
-Imports System.Collections.Generic
 Imports System.Windows.Forms
 
 Namespace E1271
-    Friend NotInheritable Class Program
 
-        Private Sub New()
-        End Sub
+    Friend Module Program
 
         ''' <summary>
         ''' The main entry point for the application.
         ''' </summary>
-        <STAThread> _
-        Shared Sub Main()
-            Application.EnableVisualStyles()
+        <STAThread>
+        Sub Main()
+            Call Application.EnableVisualStyles()
             Application.SetCompatibleTextRenderingDefault(False)
-            Application.Run(New Form1())
+            Call Application.Run(New Form1())
         End Sub
-    End Class
+    End Module
 End Namespace
