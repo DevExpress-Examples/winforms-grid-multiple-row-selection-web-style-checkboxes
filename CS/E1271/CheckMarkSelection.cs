@@ -1,4 +1,3 @@
-// Developer Express Code Central Example:
 // Multiple row selection using custom checkbox column (web style)
 
 using System;
