@@ -7,7 +7,7 @@
 # Data Grid for Windows Forms - Multiple row selection using checkboxes (web style row selection)
 
 ## Built-in Checkbox Column
-In version 13.2 and higher, Data Grid supports a built-in checkbox column for multiple row selection in grid Views. To activate this checkbox column, enable the [GridView.OptionsSelection.MultiSelect](https://documentation.devexpress.com/WindowsForms/DevExpress.XtraGrid.Views.Base.ColumnViewOptionsSelection.MultiSelect.property) option, and set the [GridView.OptionsSelection.MultiSelectMode](https://documentation.devexpress.com/WindowsForms/DevExpress.XtraGrid.Views.Grid.GridOptionsSelection.MultiSelectMode.property) property to `CheckBoxRowSelect`. 
+In v13.2 and higher, Data Grid supports a built-in checkbox column for multiple row selection in grid Views. To activate this checkbox column, enable the [GridView.OptionsSelection.MultiSelect](https://documentation.devexpress.com/WindowsForms/DevExpress.XtraGrid.Views.Base.ColumnViewOptionsSelection.MultiSelect.property) option, and set the [GridView.OptionsSelection.MultiSelectMode](https://documentation.devexpress.com/WindowsForms/DevExpress.XtraGrid.Views.Grid.GridOptionsSelection.MultiSelectMode.property) property to `CheckBoxRowSelect`. 
 
 Starting with version 18.1, you can sync row selected states with a Boolean field in the bound data source. Checkbox column bound mode ensures that row selection persists whenever you filter or group grid data.
 
