@@ -1,6 +1,4 @@
 ' Multiple row selection using custom checkbox column (web style)
-' 
-
 Imports System
 Imports System.Drawing
 Imports System.Collections
