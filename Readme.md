@@ -11,7 +11,7 @@ In v13.2 and higher, Data Grid supports a built-in checkbox column for multipl
 
 In v18.1 and later versions, you can sync row selected states with a Boolean field in the bound data source. A checkbox column's bound mode ensures that row selection persists whenever you filter or group grid data.
 
-See the following topic for more information: [Multiple Row Selection via Built-In Check Column and Selection Binding](https://docs.devexpress.com/WindowsForms/16439/controls-and-libraries/data-grid/focus-and-selection-handling/multiple-row-selection-via-built-in-check-column-and-selection-binding).
+See the following topic for more information: [Multiple Row Selection Using Built-In Check Column and Selection Binding](https://docs.devexpress.com/WindowsForms/16439/controls-and-libraries/data-grid/focus-and-selection-handling/multiple-row-selection-via-built-in-check-column-and-selection-binding).
  
 ## Custom Checkbox Column
 This example shows how you can create a custom checkbox column to select rows in Data Grid. The checkbox column's header and group rows display check marks that allow users to toggle selection of all rows and row groups, respectively.
