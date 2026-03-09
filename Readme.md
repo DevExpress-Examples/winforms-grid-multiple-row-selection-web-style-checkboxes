@@ -18,7 +18,7 @@ Read the following help topic for more information: [Multiple Row Selection Usin
 ## Custom Checkbox Row Selector
 This example demonstrates how to create a custom checkbox column to select rows in the WinForms Data Grid. The checkbox column's header and group rows display check marks that allow users to toggle selection of all rows and row groups, respectively.
   
-<img src="https://raw.githubusercontent.com/DevExpress-Examples/multiple-selection-using-checkbox-web-style-e1271/13.1.4+/media/17ac6e9d-e756-49eb-8d10-b57b281569cd.png">
+<img src="media/17ac6e9d-e756-49eb-8d10-b57b281569cd.png">
 
 The `GridCheckMarksSelection` class adds a checkbox column to a target grid View, implements the row selection functionality, and exposes selection-related methods.
 
@@ -48,3 +48,4 @@ The `GridCheckMarksSelection` class adds a checkbox column to a target grid View
 
 (you will be redirected to DevExpress.com to submit your response)
 <!-- feedback end -->
+
